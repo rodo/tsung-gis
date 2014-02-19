@@ -44,9 +44,11 @@ get_square_size_list_test()->
 
 get_square_size_int_test()->
     ?assertEqual([4,4], tms:get_square_size(ts_dynvars:new([map_height], [768]))).
-
+%%
+%% 
+%%
 read_ssize_w_zero_test()->
-    %% The size is defined
+    %% size value is not conform, return the default min
     ?assertEqual(1, tms:read_ssize(ts_dynvars:new([map_width], [<<"0">>]), width)).
 
 read_ssize_w_exists_test()->
@@ -54,7 +56,7 @@ read_ssize_w_exists_test()->
     ?assertEqual(3, tms:read_ssize(ts_dynvars:new([map_width], [<<"512">>]), width)).
 
 read_ssize_w_not_exists_test()->
-    %% The size is defined
+    %% The size is not defined, return default
     ?assertEqual(4, tms:read_ssize(ts_dynvars:new(), width)).
 
 read_ssize_h_exists_test()->
@@ -63,13 +65,15 @@ read_ssize_h_exists_test()->
     ?assertEqual(4, tms:read_ssize(DynVars, height)).
 
 read_ssize_h_not_exists_test()->
-    %% The size is defined
+    %% The size is not defined in DynVars
     ?assertEqual(3, tms:read_ssize(ts_dynvars:new(), height)).
 
 read_ssize_notexists_test()->
     %% The size is defined
     ?assertEqual(3, tms:read_ssize(ts_dynvars:new([foobar], [<<"8">>]), height)).
-
+%%
+%%
+%%
 get_urlblock_test()->
     %% The size is defined
     Urls = tms:get_urlblock({42, ts_dynvars:new([map_height], [<<"800">>])}),
@@ -82,7 +86,7 @@ get_urlblock_empty_test()->
 
 layers_test()->
     %% Two layers are defined
-    Layers = tms:layers(ts_dynvars:new([layers], [<<"france,roads">>])),
+    Layers = tms:layers(ts_dynvars:new([map_layers], [<<"france,roads">>])),
     ?assertEqual(Layers, ["france","roads"]).
 
 layers_empty_test()->
@@ -152,8 +156,21 @@ move_first_undefined_test()->
 
 move_first_defined_test()->
     %% the startpoint is defined
-    Assert = ["2/1/1","2/1/2","2/1/3","2/2/1","2/2/2","2/2/3","2/3/1","2/3/2","2/3/3","2/4/1","2/4/2","2/4/3"],
-    ?assertEqual(Assert, tms:move_first({4, ts_dynvars:new([first_url],["2/1/1"])})).
+    DynVars = ts_dynvars:new([first_url,map_width,map_height],
+			     ["2/1/1",<<"400">>,<<"400">>]),
+    Assert = ["2/1/1","2/1/2","2/2/1","2/2/2"],
+    ?assertEqual(Assert, tms:move_first({4, DynVars})).
+
+move_first_layers_test()->
+    %% the first move on 3 layers
+    DynVars = ts_dynvars:new([first_url,map_width,map_height,map_layers],
+			     ["2/1/1",<<"400">>,<<"400">>,<<"a,b,c">>]),
+    Assert = ["a/2/1/1","a/2/1/2","a/2/2/1","a/2/2/2",
+	      "b/2/1/1","b/2/1/2","b/2/2/1","b/2/2/2",
+	      "c/2/1/1","c/2/1/2","c/2/2/1","c/2/2/2"
+	     ],
+    ?assertEqual(Assert, tms:move_first_layers({4, DynVars})).
+
 %%
 %%
 %%
@@ -268,7 +285,7 @@ url_add_layers()->
 move_north_layers_test()->
     %% Move 1 time to the north on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      <<"foo,bar">>]),
@@ -278,7 +295,7 @@ move_north_layers_test()->
 move_south_layers_test()->
     %% Move 1 time to the south on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      <<"foo,bar">>]),
@@ -288,7 +305,7 @@ move_south_layers_test()->
 move_west_layers_test()->
     %% Move 1 time to the west on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      <<"foo,bar">>]),
@@ -298,7 +315,7 @@ move_west_layers_test()->
 move_east_layers_test()->
     %% Move 1 time to the east on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      <<"foo,bar">>]),

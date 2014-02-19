@@ -17,7 +17,7 @@
 %%
 %%
 %% @doc List of dynvars used:
-%%  - layers (optionnal)
+%%  - map_layers (optionnal)
 %%  - list_url
 %%  - first_url
 %%  - map_height (in pixel)
@@ -94,7 +94,7 @@ move_next({_Pid, DynVars})->
 %% Return urls of all layers to the north
 %%
 layers(DynVars)->
-    case ts_dynvars:lookup(layers, DynVars) of
+    case ts_dynvars:lookup(map_layers, DynVars) of
         {ok, Layers} -> string:tokens(binary:bin_to_list(Layers), ",");
         false -> ""
     end.
@@ -104,6 +104,12 @@ url_add_layers(Layers, Urls)->
 
 url_add_layer(Layers, Url)->
     lists:map(fun(X) -> X ++ "/" ++ Url end, Layers).
+%% @doc The first move on all layers
+%%
+%%
+move_first_layers({_Pid, DynVars})->
+    Urls = move_first({_Pid, DynVars}),
+    url_add_layers(layers(DynVars), Urls).
 
 %% @doc Move to the north on all layers
 %%
@@ -186,6 +192,10 @@ get_urlblock({_Pid, DynVars})->
 %%
 %% If the square size is not defined in the scenario the default value
 %% is returned
+%%
+%% For security reason a square can't be greater than 8 by 8
+%%
+%% @end
 %%
 get_square_size(DynVars)->
     Min = 1,
