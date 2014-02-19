@@ -47,8 +47,7 @@ This scenario implements predicitive moves
    <session name='desktop' weight='9'  type='ts_http'>
      <!-- set the map size in pixel defined in the application
           in this case with a default tile's size of 256x256
-          the map is a square 3x2
-     -->
+          the map is a square 3x2 -->
      <setdynvars sourcetype="value" value="roads,rivers,sea">
        <var name="map_layers" />
      </setdynvars>

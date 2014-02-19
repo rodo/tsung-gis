@@ -96,10 +96,23 @@ layers_empty_test()->
 
 zxy_test()->
     ?assertEqual(3, length(tms:zxy())).
-
+%%
+%%
+%%
 url_split_test()->
     ?assertEqual([12, 1242, 3345], tms:url_split("12/1242/3345")).
 
+url_split_layer_test()->
+    ?assertEqual([12, 1242, 3345], tms:url_split("foobar/12/1242/3345")).
+
+split_test()->
+    ?assertEqual(["12","13","14"], tms:split("12/13/14")).
+
+split_with_layer_test()->
+    % Split an url that contains a layer inside
+    ?assertEqual(["12","13","14"], tms:split("layer/12/13/14")).
+%%
+%%
 random_action1_test()->
     ?assertEqual(move,  tms:random_action(3)).
 

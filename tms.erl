@@ -81,7 +81,7 @@ move_first({_Pid, DynVars})->
 %%
 %% The next move is random from 6 possible actions
 %%
-%% 
+%%
 %%
 move_next({_Pid, DynVars})->
     Sq=get_square_size(DynVars),
@@ -339,7 +339,15 @@ url_corner(Urls, bottom_right)->
 url_split(Url)->
     lists:map(fun(X) -> {Int, _} = string:to_integer(X),
                         Int end,
-              string:tokens(Url, "/")).
+              split(Url)).
+
+split(Url)->
+    Elmts = string:tokens(Url, "/"),
+    case length(Elmts) of
+	3 -> T=Elmts;
+	_ -> [_|T] = Elmts
+    end,
+    T.
 
 %%======================================================================
 %% Function: fillall/0
