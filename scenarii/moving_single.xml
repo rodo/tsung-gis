@@ -12,17 +12,17 @@ Require Tsung 1.5.0 minimal
 This scenario implements predicitive moves
 
 - start on a known point
-- move one tile to the north
-- move one tile to the south
 - move one tile to the west
+- move one tile to the north
 - move one tile to the east
+- move one tile to the south
 
 -->
-<tsung loglevel="debug" dumptraffic="protocol" version="1.0">
+<tsung loglevel="notice" dumptraffic="protocol" version="1.0">
 
   <!-- Client side setup -->
   <clients>
-    <client host="localhost" weight="2" maxusers="40" />
+    <client host="localhost" use_controller_vm="true" />
   </clients>
 
   <!-- Server side setup -->
