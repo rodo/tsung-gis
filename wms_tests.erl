@@ -65,3 +65,9 @@ url_style_test()->
     Dynvars = ts_dynvars:new([width,layers,bbox,styles], [<<"42">>,<<"DataGouv">>,<<"0,1,2,3">>,<<"blue">>]),
     Assert = "FORMAT=image%2Fpng&STYLES=blue&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=DataGouv&TILESORIGIN=&BBOX=0%2C1%2C2%2C3",
     ?assertEqual(Assert, wms:url({2, Dynvars})).
+
+%% Format is defined in dynvars
+url_format_test()->
+    Dynvars = ts_dynvars:new([format], [<<"image/jpeg">>]),
+    Assert = "FORMAT=image%2Fjpeg&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=",
+    ?assertEqual(Assert, wms:url({2, Dynvars})).
