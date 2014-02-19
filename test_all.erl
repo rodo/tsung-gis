@@ -6,4 +6,5 @@
 
 all_test_() -> [geoserver_tests,
                 slippymap_tests,
+                randomcoord_tests,
                 tms_tests].

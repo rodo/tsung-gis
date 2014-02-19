@@ -11,7 +11,7 @@ all: ebin/geoserver.beam ebin/slippymap.beam ebin/tms.beam ebin/randomcoord.beam
 
 dial: ebin-debug/geoserver.dial ebin-debug/slippymap.dial ebin-debug/tms.dial ebin-debug/randomcoord.dial
 
-test: ebin-test/test_all.beam ebin-test/geoserver.beam ebin-test/tms.beam ebin-test/slippymap.beam ebin-test/geoserver_tests.beam ebin-test/tms_tests.beam ebin-test/slippymap_tests.beam
+test: ebin-test/test_all.beam ebin-test/geoserver.beam ebin-test/randomcoord.beam ebin-test/tms.beam ebin-test/slippymap.beam ebin-test/geoserver_tests.beam ebin-test/tms_tests.beam ebin-test/slippymap_tests.beam ebin-test/randomcoord_tests.beam
 
 dotest: test
 	$(ERL) -noshell -pa ./ebin-test -s eunit test test_all -s init stop
