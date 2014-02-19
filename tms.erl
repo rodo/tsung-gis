@@ -27,7 +27,7 @@
 -export([urlzxy/1]).
 -export([get_urlblock/1]).
 -export([get_urlfrom/2]).
--export([move_first/1,move_next/1]).
+-export([move_first/1,move_first_layers/1,move_next/1]).
 -export([move_north/1, move_south/1, move_west/1, move_east/1]).
 -export([move_north_layers/1,move_south_layers/1,move_west_layers/1,move_east_layers/1]).
 
