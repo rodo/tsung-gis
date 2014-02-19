@@ -95,7 +95,7 @@ move_next({_Pid, DynVars})->
 %%
 layers(DynVars)->
     case ts_dynvars:lookup(map_layers, DynVars) of
-        {ok, Layers} -> string:tokens(binary:bin_to_list(Layers), ",");
+        {ok, Layers} -> string:tokens(Layers, ",");
         false -> ""
     end.
 

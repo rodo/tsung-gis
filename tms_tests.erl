@@ -86,7 +86,7 @@ get_urlblock_empty_test()->
 
 layers_test()->
     %% Two layers are defined
-    Layers = tms:layers(ts_dynvars:new([map_layers], [<<"france,roads">>])),
+    Layers = tms:layers(ts_dynvars:new([map_layers], ["france,roads"])),
     ?assertEqual(Layers, ["france","roads"]).
 
 layers_empty_test()->
@@ -177,7 +177,7 @@ move_first_defined_test()->
 move_first_layers_test()->
     %% the first move on 3 layers
     DynVars = ts_dynvars:new([first_url,map_width,map_height,map_layers],
-			     ["2/1/1",<<"400">>,<<"400">>,<<"a,b,c">>]),
+			     ["2/1/1",<<"400">>,<<"400">>,"a,b,c"]),
     Assert = ["a/2/1/1","a/2/1/2","a/2/2/1","a/2/2/2",
 	      "b/2/1/1","b/2/1/2","b/2/2/1","b/2/2/2",
 	      "c/2/1/1","c/2/1/2","c/2/2/1","c/2/2/2"
@@ -301,7 +301,7 @@ move_north_layers_test()->
     DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
-			      <<"foo,bar">>]),
+			      "foo,bar"]),
     Assert = ["foo/8/42/49", "bar/8/42/49", "foo/8/43/49", "bar/8/43/49"],
     ?assertEqual(Assert, tms:move_north_layers({4, DynVars})).
 
@@ -311,7 +311,7 @@ move_south_layers_test()->
     DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
-			      <<"foo,bar">>]),
+			      "foo,bar"]),
     Assert = ["foo/8/42/52", "bar/8/42/52", "foo/8/43/52", "bar/8/43/52"],
     ?assertEqual(Assert, tms:move_south_layers({4, DynVars})).
 
@@ -321,7 +321,7 @@ move_west_layers_test()->
     DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
-			      <<"foo,bar">>]),
+			      "foo,bar"]),
     Assert = ["foo/8/41/50", "bar/8/41/50", "foo/8/41/51", "bar/8/41/51"],
     ?assertEqual(Assert, tms:move_west_layers({4, DynVars})).
 
@@ -331,7 +331,7 @@ move_east_layers_test()->
     DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
-			      <<"foo,bar">>]),
+			      "foo,bar"]),
     Assert = ["foo/8/44/50", "bar/8/44/50", "foo/8/44/51", "bar/8/44/51"],
     ?assertEqual(Assert, tms:move_east_layers({4, DynVars})).
 
