@@ -7,9 +7,9 @@
 ERL=/usr/bin/erl
 ERLC=/usr/bin/erlc
 
-all: ebin/geoserver.beam ebin/slippymap.beam ebin/tms.beam
+all: ebin/geoserver.beam ebin/slippymap.beam ebin/tms.beam ebin/randomcoord.beam
 
-dial: ebin-debug/geoserver.dial ebin-debug/slippymap.dial ebin-debug/tms.dial
+dial: ebin-debug/geoserver.dial ebin-debug/slippymap.dial ebin-debug/tms.dial ebin-debug/randomcoord.dial
 
 test: ebin-test/test_all.beam ebin-test/geoserver.beam ebin-test/tms.beam ebin-test/slippymap.beam ebin-test/geoserver_tests.beam ebin-test/tms_tests.beam ebin-test/slippymap_tests.beam
 
