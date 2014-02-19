@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<!--
+
+Author :  Rodolphe Quiedeville
+Context : Tile server used in OpenStreetMap
+
+Perform a bench on openstreetmap's like tile server
+
+Each request will generate 9 http calls on 9 different tile, these
+sample scenario will do 180 http calls.
+-->
+<tsung loglevel="notice" dumptraffic="protocol" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" weight="2" maxusers="40" />
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <server host="localhost" port="80" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="20" unit="second">
+      <users interarrival="1" unit="second"></users>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">tsung 1.4.2</user_agent>
+    </option>
+  </options>
+
+ <sessions>
+
+   <session name='random-blocktiles' probability='100'  type='ts_http'>
+     <!--
+     get_urlblock will return an array of nine urls
+     -->
+     <setdynvars sourcetype="erlang" callback="wmsosm:get_urlblock">
+       <var name="list_url" />
+     </setdynvars>
+
+     <!--
+     Each request will generate 9 http calls on 9 different tile, these
+     sample scenario will do 180 http calls.
+     -->
+
+     <foreach name="element" in="list_url">
+       <request subst="true">
+	 <http url="/%%_element%%.png" method="GET" version="1.1"/>
+       </request>
+     </foreach>
+
+   </session>
+
+ </sessions>
+</tsung>
