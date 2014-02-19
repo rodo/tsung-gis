@@ -88,7 +88,7 @@ layers_test()->
 layers_empty_test()->
     %% No layers are defined
     Layers = tms:layers(ts_dynvars:new()),
-    ?assertEqual(Layers, "").
+    ?assertEqual(Layers, []).
 
 zxy_test()->
     ?assertEqual(3, length(tms:zxy())).
@@ -233,3 +233,28 @@ move_south_test()->
                              ]),
     Assert = ["8/42/52", "8/43/52"],
     ?assertEqual(Assert, tms:move_south({4, DynVars})).
+%%
+%%
+%%
+move_north_layers_test()->
+    %% Move 1 time to the north on all layers
+    %% The map is a 2x2 square
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, layers], 
+                             [<<"400">>,
+			      <<"400">>,
+			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
+			      <<"foo,bar">>
+                             ]),
+    Assert = ["foo/8/42/49", "bar/8/42/49", "foo/8/43/49", "bar/8/43/49"],
+    ?assertEqual(Assert, tms:move_north_layers({4, DynVars})).
+
+
+%%
+%%
+%%
+url_add_layers()->
+    Layers = ["alpha","beta"],
+    Urls = ["lorem","ipsum"],
+    Attend = ["alpha/lorem","beta/lorem","beta/lorem","beta/lorem"],
+    ?assertEqual(Attend, tms:url_add_layers(Layers, Urls)).
+

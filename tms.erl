@@ -31,6 +31,9 @@
 -export([move_next/1]).
 -export([move_north/1, move_south/1, move_west/1, move_east/1]).
 -export([move_north_layers/1]).
+
+-export([layers/1]).
+
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
 -define(ZOOM_LEVEL_MIN, 1).
@@ -99,10 +102,23 @@ layers(DynVars)->
         false -> ""
     end.
 
+%% @doc Move to the north on all layers
+%%
+%%
 move_north_layers({_Pid, DynVars})->
     Layers = layers(DynVars),
-    urls = move_north({_Pid, DynVars}).
+    Urls = move_north({_Pid, DynVars}),
+    url_add_layers(Layers, Urls).
+
+url_add_layers(Layers, Urls)->
+    lists:merge(lists:map(fun(X) -> url_add_layer(Layers, X) end, Urls)).
+
+url_add_layer(Layers, Url)->
+    lists:map(fun(X) -> X ++ "/" ++ Url end, Layers).
+
 %% @doc Move to the north
+%% return list
+%% @end
 %%
 move_north({_Pid, DynVars})->
     Sq=get_square_size(DynVars),
