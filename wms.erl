@@ -18,8 +18,8 @@
 %%
 %%
 %%
--module(geoserver).
--export([urlwms/1]).
+-module(wms).
+-export([url/1]).
 -export([defaults/0]).
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
@@ -63,7 +63,7 @@
 %% WIDTH=256
 %% HEIGHT=256
 
-urlwms({_Pid, DynVars})->
+url({_Pid, DynVars})->
     string:strip(buildurl(DynVars, [format, styles, service,
                                     version, request, tiled,
                                     width, height, transparent,

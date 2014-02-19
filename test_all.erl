@@ -4,7 +4,7 @@
 -module(test_all).
 -include_lib("eunit/include/eunit.hrl").
 
-all_test_() -> [geoserver_tests,
+all_test_() -> [wms_tests,
                 slippymap_tests,
                 randomcoord_tests,
                 tms_tests].
