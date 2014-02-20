@@ -1,3 +1,4 @@
+
 %
 % @doc OpenStreetMap slippy map tile numbers
 %
@@ -11,6 +12,24 @@
 -module(slippymap).
 -export([deg2num/3]).
 -export([num2deg/3]).
+-export([tmstowms/1]).
+
+% @doc Convert list_url DynVar to list of coord
+%
+%
+tmstowms({_Pid, DynVars})->
+    Urls = lists:map(fun(Url)->
+                             [Z, X, Y] = url_split(Url),
+                             num2deg(X, Y, Z)
+                     end,
+                     last_block(DynVars)),
+    Urls.
+
+last_block(DynVars)->
+    case ts_dynvars:lookup(list_url, DynVars) of
+        {ok, Block} -> Block;
+        false -> ""
+    end.
 
 % @doc convert geometric coordinate to tile numbers
 %
@@ -36,3 +55,23 @@ num2deg(X,Y,Zoom)->
 
 deg2rad(C)->
     C * math:pi() / 180.
+%
+%
+%
+%% Split the url
+%%
+%% @doc return an array with [Z, X, Y]
+url_split(Url)->
+    lists:map(fun(X) -> 
+                      {Int, _} = string:to_integer(X),
+                      Int 
+              end,
+              split(Url)).
+
+split(Url)->
+    Elmts = string:tokens(Url, "/"),
+    case length(Elmts) of
+        3 -> T=Elmts;
+        _ -> [_|T] = Elmts
+    end,
+    T.

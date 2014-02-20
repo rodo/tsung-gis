@@ -23,3 +23,7 @@ deg2num_test()->
 deg2num2_test()->
     ?assertEqual({13854,14271}, slippymap:deg2num(- 78.90 , 124.4 , 14)).
 
+tmstowsm_test()->
+    Dynvar = ts_dynvars:new([list_url],[["4/4/4/","5/5/5"]]),
+    Attend = [{-90.0,66.51326044311186},{-123.75,76.84081641443098}],
+    ?assertEqual(Attend, slippymap:tmstowms({4, Dynvar})).
