@@ -13,6 +13,7 @@
 -export([deg2num/3]).
 -export([num2deg/3]).
 -export([tmstowms/1]).
+-export([purge/1]).
 
 % @doc Convert list_url DynVar to list of coord
 %
@@ -23,13 +24,16 @@ tmstowms({_Pid, DynVars})->
                              num2deg(X, Y, Z)
                      end,
                      last_block(DynVars)),
-    Urls.
+    purge(Urls).
 
 last_block(DynVars)->
     case ts_dynvars:lookup(list_url, DynVars) of
         {ok, Block} -> Block;
         false -> ""
     end.
+
+purge(List)->
+    lists:usort(List).
 
 % @doc convert geometric coordinate to tile numbers
 %
@@ -62,9 +66,9 @@ deg2rad(C)->
 %%
 %% @doc return an array with [Z, X, Y]
 url_split(Url)->
-    lists:map(fun(X) -> 
+    lists:map(fun(X) ->
                       {Int, _} = string:to_integer(X),
-                      Int 
+                      Int
               end,
               split(Url)).
 

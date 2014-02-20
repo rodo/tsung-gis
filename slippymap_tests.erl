@@ -23,7 +23,25 @@ deg2num_test()->
 deg2num2_test()->
     ?assertEqual({13854,14271}, slippymap:deg2num(- 78.90 , 124.4 , 14)).
 
+purge_test()->
+    % list_url contains urls with layer name
+    Urls = ["4/4/4","4/4/4","3/3/3"],
+    Attend = ["3/3/3","4/4/4"],
+    ?assertEqual(Attend, slippymap:purge(Urls)).
+
 tmstowsm_test()->
     Dynvar = ts_dynvars:new([list_url],[["4/4/4/","5/5/5"]]),
-    Attend = [{-90.0,66.51326044311186},{-123.75,76.84081641443098}],
+    Attend = [{-123.75,76.84081641443098},{-90.0,66.51326044311186}],
+    ?assertEqual(Attend, slippymap:tmstowms({4, Dynvar})).
+
+tmstowsm_layer_test()->
+    % list_url contains urls with layer name
+    Dynvar = ts_dynvars:new([list_url],[["foo/4/4/4/","bar/5/5/5"]]),
+    Attend = [{-123.75,76.84081641443098},{-90.0,66.51326044311186}],
+    ?assertEqual(Attend, slippymap:tmstowms({4, Dynvar})).
+
+tmstowsm_layerdup_test()->
+    % list_url contains urls with layer name
+    Dynvar = ts_dynvars:new([list_url],[["foo/4/4/4/","bar/4/4/4"]]),
+    Attend = [{-90.0,66.51326044311186}],
     ?assertEqual(Attend, slippymap:tmstowms({4, Dynvar})).
