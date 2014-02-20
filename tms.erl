@@ -22,7 +22,7 @@
 %%  - list_url
 %%  - map_height (in pixel)
 %%  - map_width (in pixel)
-%%  - map_layers (optionnal)
+%%  - tms_layers (optionnal)
 %% @end
 -module(tms).
 -export([urlzxy/1]).
@@ -95,7 +95,7 @@ move_next({_Pid, DynVars})->
 %% Return urls of all layers to the north
 %%
 layers(DynVars)->
-    case ts_dynvars:lookup(map_layers, DynVars) of
+    case ts_dynvars:lookup(tms_layers, DynVars) of
         {ok, Layers} -> string:tokens(Layers, ",");
         false -> ""
     end.

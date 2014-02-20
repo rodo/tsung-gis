@@ -86,7 +86,7 @@ get_urlblock_empty_test()->
 
 layers_test()->
     %% Two layers are defined
-    Layers = tms:layers(ts_dynvars:new([map_layers], ["france,roads"])),
+    Layers = tms:layers(ts_dynvars:new([tms_layers], ["france,roads"])),
     ?assertEqual(Layers, ["france","roads"]).
 
 layers_empty_test()->
@@ -176,7 +176,7 @@ move_first_defined_test()->
 
 move_first_layers_test()->
     %% the first move on 3 layers
-    DynVars = ts_dynvars:new([first_url,map_width,map_height,map_layers],
+    DynVars = ts_dynvars:new([first_url,map_width,map_height,tms_layers],
                              ["2/1/1",<<"400">>,<<"400">>,"a,b,c"]),
     Assert = ["a/2/1/1","a/2/1/2","a/2/2/1","a/2/2/2",
               "b/2/1/1","b/2/1/2","b/2/2/1","b/2/2/2",
@@ -298,7 +298,7 @@ url_add_layers()->
 move_north_layers_test()->
     %% Move 1 time to the north on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, tms_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      "foo,bar"]),
@@ -308,7 +308,7 @@ move_north_layers_test()->
 move_south_layers_test()->
     %% Move 1 time to the south on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, tms_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      "foo,bar"]),
@@ -318,7 +318,7 @@ move_south_layers_test()->
 move_west_layers_test()->
     %% Move 1 time to the west on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, tms_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      "foo,bar"]),
@@ -328,7 +328,7 @@ move_west_layers_test()->
 move_east_layers_test()->
     %% Move 1 time to the east on all layers
     %% The map is a 2x2 square
-    DynVars = ts_dynvars:new([map_width, map_height, list_url, map_layers], 
+    DynVars = ts_dynvars:new([map_width, map_height, list_url, tms_layers], 
                              [<<"400">>,<<"400">>,
 			      ["8/42/50", "8/43/50", "8/42/51", "8/43/51"],
 			      "foo,bar"]),
