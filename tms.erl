@@ -15,14 +15,15 @@
 %%     You should have received a copy of the GNU General Public License
 %%     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%
+%% Generate tile map urls based on predictible actions
 %%
 %% @doc List of dynvars used:
-%%  - map_layers (optionnal)
-%%  - list_url
 %%  - first_url
+%%  - list_url
 %%  - map_height (in pixel)
 %%  - map_width (in pixel)
-%%
+%%  - map_layers (optionnal)
+%% @end
 -module(tms).
 -export([urlzxy/1]).
 -export([get_urlblock/1]).

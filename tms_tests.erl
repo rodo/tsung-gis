@@ -170,17 +170,17 @@ move_first_undefined_test()->
 move_first_defined_test()->
     %% the startpoint is defined
     DynVars = ts_dynvars:new([first_url,map_width,map_height],
-			     ["2/1/1",<<"400">>,<<"400">>]),
+                             ["2/1/1",<<"400">>,<<"400">>]),
     Assert = ["2/1/1","2/1/2","2/2/1","2/2/2"],
     ?assertEqual(Assert, tms:move_first({4, DynVars})).
 
 move_first_layers_test()->
     %% the first move on 3 layers
     DynVars = ts_dynvars:new([first_url,map_width,map_height,map_layers],
-			     ["2/1/1",<<"400">>,<<"400">>,"a,b,c"]),
+                             ["2/1/1",<<"400">>,<<"400">>,"a,b,c"]),
     Assert = ["a/2/1/1","a/2/1/2","a/2/2/1","a/2/2/2",
-	      "b/2/1/1","b/2/1/2","b/2/2/1","b/2/2/2",
-	      "c/2/1/1","c/2/1/2","c/2/2/1","c/2/2/2"
+              "b/2/1/1","b/2/1/2","b/2/2/1","b/2/2/2",
+              "c/2/1/1","c/2/1/2","c/2/2/1","c/2/2/2"
 	     ],
     ?assertEqual(Assert, tms:move_first_layers({4, DynVars})).
 
