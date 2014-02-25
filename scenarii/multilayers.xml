@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<!--
+
+Author :  Rodolphe Quiedeville
+Context : Tile server
+
+Perform a bench on tile server
+
+Require Tsung 1.5.0 minimal
+
+This scenario implements predicitive moves
+
+- start on a known point
+- move one tile to the west
+- move one tile to the north
+- move one tile to the east
+- move one tile to the south
+
+-->
+<tsung loglevel="notice" dumptraffic="protocol" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" />
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <server host="localhost" port="80" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="20" unit="second">
+      <users interarrival="1" unit="second" maxnumber="1"></users>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">tsung 1.5.0</user_agent>
+    </option>
+  </options>
+
+ <sessions>
+
+   <session name='desktop' weight='9'  type='ts_http'>
+     <!-- set the map size in pixel defined in the application
+          in this case with a default tile's size of 256x256
+          the map is a square 2x2
+     -->
+     <setdynvars sourcetype="value" value="500">
+       <var name="map_width" />
+     </setdynvars>
+     <setdynvars sourcetype="value" value="500">
+       <var name="map_height" />
+     </setdynvars>
+     <setdynvars sourcetype="value" value="wms:tms">
+       <var name="map_systems" />
+     </setdynvars>
+
+     <!-- set the first url
+	  Corresponding to the top left tile when accessing the
+	  map for the first time
+     -->
+     <setdynvars sourcetype="value" value="8/109/121">
+       <var name="first_url" />
+     </setdynvars>
+
+     <!-- First action -->
+     <setdynvars sourcetype="erlang" callback="map:move_first">
+       <var name="list_url" />
+     </setdynvars>
+
+     <transaction name="move_first">
+       <foreach name="url" in="list_url">
+         <request subst="true"><http url="/%%_url%%.png" method="GET" version="1.1"/></request>
+       </foreach>
+     </transaction>
+
+     <!-- Move to the west -->
+     <setdynvars sourcetype="erlang" callback="tms:move_west">
+       <var name="list_url" />
+     </setdynvars>
+
+     <transaction name="move_west">
+       <foreach name="element" in="list_url">
+         <request subst="true">
+           <http url="/%%_element%%.png" method="GET" version="1.1"/>
+         </request>
+       </foreach>
+     </transaction>
+
+     <!-- Move to the north -->
+     <setdynvars sourcetype="erlang" callback="tms:move_north">
+       <var name="list_url" />
+     </setdynvars>
+
+     <transaction name="move_north">
+       <foreach name="element" in="list_url">
+	 <request subst="true">
+	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
+	 </request>
+       </foreach>
+     </transaction>
+
+     <!-- Move to the east -->
+     <setdynvars sourcetype="erlang" callback="tms:move_east">
+       <var name="list_url" />
+     </setdynvars>
+
+     <transaction name="move_east">
+       <foreach name="element" in="list_url">
+	 <request subst="true">
+	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
+	 </request>
+       </foreach>
+     </transaction>
+
+     <!-- Move to the south -->
+     <setdynvars sourcetype="erlang" callback="tms:move_south">
+       <var name="list_url" />
+     </setdynvars>
+
+     <transaction name="move_south">
+       <foreach name="element" in="list_url">
+	 <request subst="true">
+	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
+	 </request>
+       </foreach>
+     </transaction>
+
+
+
+   </session>
+
+ </sessions>
+</tsung>

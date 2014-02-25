@@ -20,6 +20,7 @@
 -module(wms).
 -export([url/1]).
 -export([defaults/0]).
+-export([move_first/1]).
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
 %%
@@ -47,7 +48,8 @@
                         ?FORMAT, ?TILED, ?HEIGHT, ?WIDTH,
                         ?TRANSPARENT, ?SRS,
                         ?LAYERS, ?TILESORIGIN, ?BBOX])).
-%% http://c.tile.cartosm.eu/geoserver/wms?
+
+%% http://foo.bar/geoserver/wms?
 %% LAYERS=DataGouv%3Arpg2010
 %% TILESORIGIN=-20037508.34%2C-20037508.34
 %% BBOX=288626.21876465,6525887.7259668,293518.18857422,6530779.6957764
@@ -61,6 +63,15 @@
 %% SRS=EPSG%3A900913
 %% WIDTH=256
 %% HEIGHT=256
+
+move_first({_Pid, DynVars})->
+    Bbox = slippymap:tmstowms({_Pid, DynVars}),
+    lists:map(fun(X) ->
+                      {Ta, Tb, Tc, Td} = X,
+                      Tz = string:join([Ta ++","++Tb++Tc++Td,
+                      url({_Pid, lists:merge(DynVars, [{tilesorigin, Tz}])})
+              end,
+              Bbox).
 
 url({_Pid, DynVars})->
     string:strip(buildurl(DynVars, [format, styles, service,

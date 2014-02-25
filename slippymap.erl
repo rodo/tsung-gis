@@ -11,9 +11,9 @@
 
 -module(slippymap).
 -export([deg2num/3]).
--export([num2deg/3]).
+-export([num2deg/3,num2bbox/3]).
 -export([tmstowms/1]).
--export([purge/1]).
+-export([tile2lat/2,tile2lon/2]).
 
 % @doc Convert list_url DynVar to list of coord
 %
@@ -21,19 +21,16 @@
 tmstowms({_Pid, DynVars})->
     Urls = lists:map(fun(Url)->
                              [Z, X, Y] = url_split(Url),
-                             num2deg(X, Y, Z)
+                             num2bbox(X, Y, Z)
                      end,
                      last_block(DynVars)),
-    purge(Urls).
+    lists:usort(Urls).
 
 last_block(DynVars)->
     case ts_dynvars:lookup(list_url, DynVars) of
         {ok, Block} -> Block;
         false -> ""
     end.
-
-purge(List)->
-    lists:usort(List).
 
 % @doc convert geometric coordinate to tile numbers
 %
@@ -51,14 +48,35 @@ deg2num(Lat,Lon,Zoom)->
 % @spec num2deg(X::integer(), Y::integer(), Zoom::integer()) -> {float(), float()}
 %
 num2deg(X,Y,Zoom)->
-    N = math:pow(2, Zoom),
-    Lon = X / N * 360 - 180,
-    Lat_rad = math:atan(math:sinh(math:pi() * (1 - 2 * Y / N))),
-    Lat = Lat_rad * 180 / math:pi(),
-    {Lon, Lat}.
+    {tile2lon(X, Zoom), tile2lat(Y, Zoom)}.
 
 deg2rad(C)->
     C * math:pi() / 180.
+
+% @doc convert tile numbers to bouding box
+%
+%
+num2bbox(X,Y,Zoom)->
+    North = tile2lat(Y, Zoom),
+    South = tile2lat(Y + 1, Zoom),
+    West = tile2lon(X, Zoom),
+    East = tile2lon(X + 1, Zoom),
+    {West, South, East, North}.
+
+tile2lat(Y, Z)->
+    % double n = Math.PI - (2.0 * Math.PI * y) / Math.pow(2.0, z);
+    % return Math.toDegrees(Math.atan(Math.sinh(n)));) ->
+    N = math:pi() - ( 2.0 * math:pi() * Y) / math:pow(2, Z),
+    LatRad = math:atan(math:sinh(N)),
+    LatRad * 180 / math:pi().
+
+tile2lon(X, Z)->
+    % double n = Math.PI - (2.0 * Math.PI * y) / Math.pow(2.0, z);
+    % return Math.toDegrees(Math.atan(Math.sinh(n)));) ->
+    N = math:pow(2, Z),
+    Lon = X / N * 360 - 180,
+    Lon.
+
 %
 %
 %
