@@ -68,7 +68,7 @@ move_first({_Pid, DynVars})->
     Bbox = slippymap:tmstowms({_Pid, DynVars}),
     lists:map(fun(X) ->
                       {Ta, Tb, Tc, Td} = X,
-                      Tz = string:join([Ta ++","++Tb++Tc++Td,
+                      Tz = string:join([Ta,Tb,Tc,Td],","),
                       url({_Pid, lists:merge(DynVars, [{tilesorigin, Tz}])})
               end,
               Bbox).
