@@ -17,7 +17,7 @@ dotest: test
 	$(ERL) -noshell -pa ./ebin-test -s eunit test test_all -s init stop
 
 clean:
-	rm *.beam
+	rm -f *.beam
 	rm -fr ebin/*.beam
 	rm -fr ebin-test/*.beam
 	rm -fr ebin-debug/*.dial
