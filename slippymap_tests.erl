@@ -37,7 +37,7 @@ tmstowsm_layer_test()->
     Dynvar = ts_dynvars:new([list_url],[["foo/4/4/4/","bar/5/5/5"]]),
     Attend = [{-123.75,74.01954331,-112.5,76.84081641},
               {-90.0,55.77657302,-67.5,66.51326044}],
-        ?assertEqual(Attend, slippymap:tmstowms({4, Dynvar})).
+    ?assertEqual(Attend, slippymap:tmstowms({4, Dynvar})).
 
 tmstowsm_layerdup_test()->
     % list_url contains urls with layer name

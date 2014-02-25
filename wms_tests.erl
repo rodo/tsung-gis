@@ -72,9 +72,8 @@ url_format_test()->
     Assert = "FORMAT=image%2Fjpeg&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=",
     ?assertEqual(Assert, wms:url({2, Dynvars})).
 
-
 move_first_test()->
     %% the startpoint is defined
-    DynVars = ts_dynvars:new([first_url,list_url,map_width,map_height], ["2/1/1",["2/1/1"],<<"400">>,<<"400">>]),
+    DynVars = ts_dynvars:new([first_url, list_url, map_width, map_height],  ["2/1/1", ["2/1/1"], <<"400">>, <<"400">>]),
     Assert = ["2/1/1","2/1/2","2/2/1","2/2/2"],
     ?assertEqual(Assert, wms:move_first({4, DynVars})).
