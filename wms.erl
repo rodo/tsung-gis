@@ -68,16 +68,20 @@ move_first({_Pid, DynVars})->
     Bbox = slippymap:tmstowms({_Pid, DynVars}),
     lists:map(fun(X) ->
                       Tz = string:join(tupletolist(X),","),
-                      url({_Pid, lists:merge(DynVars, [{tilesorigin, Tz}])})
+                      url({_Pid, lists:merge(DynVars, [{bbox, Tz}])})
               end,
               Bbox).
 
 tupletolist(Tuple)->
     {Ta, Tb, Tc, Td} = Tuple,
-    lists:merge([io_lib:format("~.f", [Ta]),
-		 io_lib:format("~.f", [Tb]),
-		 io_lib:format("~.f", [Tc]),
-		 io_lib:format("~.f", [Td])]).
+    lists:map(fun(X) ->
+		      [A] = X,
+		      A
+	      end,
+	      [io_lib:format("~.8f", [Ta]),
+	       io_lib:format("~.8f", [Tb]),
+	       io_lib:format("~.8f", [Tc]),
+	       io_lib:format("~.8f", [Td])]).
 
 url({_Pid, DynVars})->
     string:strip(buildurl(DynVars, [format, styles, service,

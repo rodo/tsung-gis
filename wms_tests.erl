@@ -75,5 +75,10 @@ url_format_test()->
 move_first_test()->
     %% the startpoint is defined
     DynVars = ts_dynvars:new([first_url, list_url, map_width, map_height],  ["2/1/1", ["2/1/1"], <<"400">>, <<"400">>]),
-    Assert = ["2/1/1","2/1/2","2/2/1","2/2/2"],
+    Assert = ["FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=-90.00000000%2C0.00000000%2C0.00000000%2C66.51326044"],
     ?assertEqual(Assert, wms:move_first({4, DynVars})).
+
+tupletolist_test()->
+    List = {42.01, 52.3, 2.2, 10.0},
+    Assert = ["42.01000000","52.30000000","2.20000000","10.00000000"],
+    ?assertEqual(Assert, wms:tupletolist(List)).
