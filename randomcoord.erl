@@ -1,5 +1,5 @@
 %%
-%% Copyright (c) 2013 Rodolphe Quiédeville <rodolphe@quiedeville.org>
+%% Copyright (c) 2013,2014 Rodolphe Quiédeville <rodolphe@quiedeville.org>
 %%
 %%     This program is free software: you can redistribute it and/or modify
 %%     it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@
 %% Return a tuple Lat,Lon in range
 %%
 -module(randomcoord).
--export([rcoord/0,rcoord/2,rcoord/4,rcoord_array/0]).
+-export([rcoord/0,rcoord/2,rcoord/4,rcoord_array/1]).
 -export([url/1]).
 
 url({_Pid,_DynVars})->
     {Lat,Lon} = rcoord(),
     "lat=" ++ lists:flatten(io_lib:format("~.6f",[Lat])) ++ "&lon=" ++ lists:flatten(io_lib:format("~.6f",[Lon])).
 
-rcoord_array()->
+rcoord_array({_Pid,_DynVars})->
     {Lat,Lon} = rcoord(),
     [Lat,Lon].
 
