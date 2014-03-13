@@ -45,10 +45,13 @@ deg2num(Lat,Lon,Zoom)->
 
 % @doc convert tile numbers to geometric coordinate
 %
+% Return a tuple : {longitude, latitude}
+% 
 % @spec num2deg(X::integer(), Y::integer(), Zoom::integer()) -> {float(), float()}
 %
 num2deg(X,Y,Zoom)->
     {tile2lon(X, Zoom), tile2lat(Y, Zoom)}.
+
 
 deg2rad(C)->
     C * math:pi() / 180.
@@ -68,14 +71,15 @@ tile2lat(Y, Z)->
     % return Math.toDegrees(Math.atan(Math.sinh(n)));) ->
     N = math:pi() - ( 2.0 * math:pi() * Y) / math:pow(2, Z),
     LatRad = math:atan(math:sinh(N)),
-    LatRad * 180 / math:pi().
+    [Lat] = io_lib:format("~.8f", [LatRad * 180 / math:pi()]),
+    list_to_float(Lat).
 
 tile2lon(X, Z)->
     % double n = Math.PI - (2.0 * Math.PI * y) / Math.pow(2.0, z);
     % return Math.toDegrees(Math.atan(Math.sinh(n)));) ->
     N = math:pow(2, Z),
-    Lon = X / N * 360 - 180,
-    Lon.
+    [Lon] = io_lib:format("~.8f", [X / N * 360 - 180]),
+    list_to_float(Lon).
 
 %
 %
