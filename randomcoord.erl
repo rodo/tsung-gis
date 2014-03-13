@@ -17,12 +17,16 @@
 %% Return a tuple Lat,Lon in range
 %%
 -module(randomcoord).
--export([rcoord/0,rcoord/2,rcoord/4]).
+-export([rcoord/0,rcoord/2,rcoord/4,rcoord_array/0]).
 -export([url/1]).
 
 url({_Pid,_DynVars})->
     {Lat,Lon} = rcoord(),
     "lat=" ++ lists:flatten(io_lib:format("~.6f",[Lat])) ++ "&lon=" ++ lists:flatten(io_lib:format("~.6f",[Lon])).
+
+rcoord_array()->
+    {Lat,Lon} = rcoord(),
+    [Lat,Lon].
 
 rcoord()->
     rcoord(-90.0,90.0,-180.0,180.0).
