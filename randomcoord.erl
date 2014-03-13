@@ -26,7 +26,8 @@ url({_Pid,_DynVars})->
 
 rcoord_array({_Pid,_DynVars})->
     {Lat,Lon} = rcoord(),
-    [Lat,Lon].
+    [lists:flatten(io_lib:format("~.6f",[Lat])), 
+     lists:flatten(io_lib:format("~.6f",[Lon]))].
 
 rcoord()->
     rcoord(-90.0,90.0,-180.0,180.0).
