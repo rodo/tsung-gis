@@ -17,22 +17,38 @@
 %% Return a tuple Lat,Lon in range
 %%
 -module(randomcoord).
--export([rcoord/0,rcoord/2,rcoord/4,rcoord_array/1]).
+-export([rcoord/0,rcoord/1,rcoord/2,rcoord/4,rcoord_array/1]).
 -export([url/1]).
 
 url({_Pid,_DynVars})->
     {Lat,Lon} = rcoord(),
     "lat=" ++ lists:flatten(io_lib:format("~.6f",[Lat])) ++ "&lon=" ++ lists:flatten(io_lib:format("~.6f",[Lon])).
 
-rcoord_array({_Pid,_DynVars})->
-    {Lat,Lon} = rcoord(),
+rcoord_array({_Pid, DynVars})->
+    case ts_dynvars:lookup(country, DynVars) of
+        {ok,Value}->
+	    {Lat,Lon} = rcoord(Value);
+        false ->
+	    {Lat,Lon} = rcoord()
+    end,    
     [lists:flatten(io_lib:format("~.6f",[Lat])), 
      lists:flatten(io_lib:format("~.6f",[Lon]))].
 
-rcoord()->
-    rcoord(-90.0,90.0,-180.0,180.0).
+rcoord("france")->
+    rcoord(-0.8336,43.5771,5.9108,49.2775);
+rcoord("spain")->
+    rcoord(-6.14,38.4328,-0.3295,42.7499);
+rcoord("portugal")->
+    rcoord(-8.546,37.1392,-7.5914,41.7578);
+rcoord("germany")->
+    rcoord(7.0875,49.1931,12.0082,53.2182);
+rcoord(_) ->
+    rcoord().
 
-rcoord(Bottom,Top,Left,Right)->
+rcoord() ->
+    rcoord(-180,-90.0,180.0,90.0).
+
+rcoord(Left,Bottom,Right,Top)->
     Lon=longitude(float(Left),float(Right)),
     Lat=latitude(float(Bottom),float(Top)),
     {Lat,Lon}.
