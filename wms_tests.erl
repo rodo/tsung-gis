@@ -40,42 +40,42 @@ buildurl_test() ->
 
 %% url/1
 url_test()->
-    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=",
+    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=&TILESORIGIN=&BBOX=",
     ?assertEqual(Assert, wms:url({2, ts_dynvars:new([foo], [<<"42">>])})).
 
 %% url/1
 url2_test()->
-    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=",
+    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=&TILESORIGIN=&BBOX=",
     ?assertEqual(Assert, wms:url({2, ts_dynvars:new([width], [<<"42">>])})).
 
 %% Layer is defined in dynvars
 url_layer_test()->
     Dynvars = ts_dynvars:new([width,layers], [<<"42">>,<<"DataGouv">>]),
-    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=DataGouv&TILESORIGIN=&BBOX=",
+    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=DataGouv&TILESORIGIN=&BBOX=",
     ?assertEqual(Assert, wms:url({2, Dynvars})).
 
 %% BBOX defined in dynvars
 url_bbox_test()->
     Dynvars = ts_dynvars:new([width,layers,bbox], [<<"42">>,<<"DataGouv">>,<<"0,1,2,3">>]),
-    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=DataGouv&TILESORIGIN=&BBOX=0%2C1%2C2%2C3",
+    Assert = "FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=DataGouv&TILESORIGIN=&BBOX=0%2C1%2C2%2C3",
     ?assertEqual(Assert, wms:url({2, Dynvars})).
 
 %% Styles is defined in dynvars
 url_style_test()->
     Dynvars = ts_dynvars:new([width,layers,bbox,styles], [<<"42">>,<<"DataGouv">>,<<"0,1,2,3">>,<<"blue">>]),
-    Assert = "FORMAT=image%2Fpng&STYLES=blue&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=DataGouv&TILESORIGIN=&BBOX=0%2C1%2C2%2C3",
+    Assert = "FORMAT=image%2Fpng&STYLES=blue&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=42&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=DataGouv&TILESORIGIN=&BBOX=0%2C1%2C2%2C3",
     ?assertEqual(Assert, wms:url({2, Dynvars})).
 
 %% Format is defined in dynvars
 url_format_test()->
     Dynvars = ts_dynvars:new([format], [<<"image/jpeg">>]),
-    Assert = "FORMAT=image%2Fjpeg&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=",
+    Assert = "FORMAT=image%2Fjpeg&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=&TILESORIGIN=&BBOX=",
     ?assertEqual(Assert, wms:url({2, Dynvars})).
 
 move_first_test()->
     %% the startpoint is defined
     DynVars = ts_dynvars:new([first_url, list_url, map_width, map_height],  ["2/1/1", ["2/1/1"], <<"400">>, <<"400">>]),
-    Assert = ["FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A900913&LAYERS=&TILESORIGIN=&BBOX=-90.00000000%2C0.00000000%2C0.00000000%2C66.51326044"],
+    Assert = ["FORMAT=image%2Fpng&STYLES=&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&TILED=true&WIDTH=256&HEIGHT=256&TRANSPARENT=true&SRS=EPSG%3A4326&LAYERS=&TILESORIGIN=&BBOX=-90.00000000%2C0.00000000%2C0.00000000%2C66.51326044"],
     ?assertEqual(Assert, wms:move_first({4, DynVars})).
 
 tupletolist_test()->

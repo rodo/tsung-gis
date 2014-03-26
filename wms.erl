@@ -38,7 +38,7 @@
 -define(TRANSPARENT, "true").
 -define(WIDTH, "256").
 -define(HEIGHT, "256").
--define(SRS, "EPSG:900913").
+-define(SRS, "EPSG:4326").
 -define(DEFAULTS,
         ts_dynvars:new([styles, service, version, request,
                         format, tiled, height, width,
@@ -60,7 +60,7 @@
 %% SERVICE=WMS
 %% VERSION=1.1.1
 %% REQUEST=GetMap
-%% SRS=EPSG%3A900913
+%% SRS=EPSG%3A4326
 %% WIDTH=256
 %% HEIGHT=256
 
