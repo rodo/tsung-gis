@@ -7,11 +7,11 @@
 ERL=/usr/bin/erl
 ERLC=/usr/bin/erlc
 
-all: ebin/map.beam ebin/wms.beam ebin/slippymap.beam ebin/tms.beam ebin/randomcoord.beam
+all: ebin/map.beam ebin/wms.beam ebin/slippymap.beam ebin/tms.beam ebin/randomcoord.beam ebin/postgis.beam
 
-dial: ebin-debug/map.dial ebin-debug/wms.dial ebin-debug/slippymap.dial ebin-debug/tms.dial ebin-debug/randomcoord.dial
+dial: ebin-debug/map.dial ebin-debug/wms.dial ebin-debug/slippymap.dial ebin-debug/tms.dial ebin-debug/randomcoord.dial ebin-debug/postgis.dial
 
-test: ebin-test/test_all.beam ebin-test/map.beam ebin-test/wms.beam ebin-test/randomcoord.beam ebin-test/tms.beam ebin-test/slippymap.beam ebin-test/wms_tests.beam ebin-test/map_tests.beam ebin-test/tms_tests.beam ebin-test/slippymap_tests.beam ebin-test/randomcoord_tests.beam
+test: ebin-test/test_all.beam ebin-test/map.beam ebin-test/wms.beam ebin-test/tms.beam ebin-test/slippymap.beam ebin-test/wms_tests.beam ebin-test/map_tests.beam ebin-test/tms_tests.beam ebin-test/slippymap_tests.beam ebin-test/randomcoord.beam ebin-test/randomcoord_tests.beam ebin-test/postgis.beam ebin-test/postgis_tests.beam
 
 dotest: test
 	$(ERL) -noshell -pa ./ebin-test -s eunit test test_all -s init stop
