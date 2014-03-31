@@ -25,3 +25,8 @@ Or for only one module, ``tms`` for example
 
 $ make test
 $ /usr/bin/erl -noshell -pa ./ebin-test -s eunit test tms_tests -s init stop
+
+Documentation
+=============
+
+The documentation is online at http://tsung-gis.readthedocs.org/
