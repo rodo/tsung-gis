@@ -1,8 +1,8 @@
 .. py:module:: slippymap
 
-==========
-reproj.erl
-==========
+=============
+slippymap.erl
+=============
 
 Tsung Exports
 =============
