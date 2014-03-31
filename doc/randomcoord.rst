@@ -1,3 +1,5 @@
+.. py:module:: randomcoord
+
 ===============
 randomcoord.erl
 ===============
@@ -64,13 +66,21 @@ scenario.
 Countries already defined
 -------------------------
 
+* France
+
+* Germany
+
+* Portugal
+
+* Spain
+
 Define a new country
 --------------------
 
 It's easy as create a new function `rcoord/1` with the country name as
 paramater, and return the value of rcoord/4 with the desired bbox. 
 
-In the folowing example the country name is `groland` which is defined
+In the following example the country name is `groland` which is defined
 by 7.14,42.84,14.07,56.84
 
 .. code-block:: erlang

@@ -7,6 +7,7 @@ Modules
    :maxdepth: 2
 
    map
+   postgis
    randomcoord
    reproj
    slippymap
