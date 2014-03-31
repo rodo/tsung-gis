@@ -54,11 +54,16 @@ rcoord(Left,Bottom,Right,Top)->
     Lat=latitude(float(Bottom),float(Top)),
     {Lat,Lon}.
 
-rcoord(Min,Max)->
+rcoord(Min,Max) when Min == Max ->
+    Max;
+rcoord(Min,Max) when Min > Max ->
+    rcoord(Max, Min);
+rcoord(Min,Max) ->
     {N1,N2,N3} = now(),
     random:seed(N1,N2,N3),
     Val=random:uniform() + Min + random:uniform(round(Max - Min)),
     max(Min,min(Val,Max)).
+
 
 longitude(Left,Right)->
     X = rcoord(Left,Right),

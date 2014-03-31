@@ -22,12 +22,14 @@
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
 r_point_test()->
+    %%
     Url = postgis:r_point(),
     ?assertEqual(true, is_list(Url)).
 
 r_point_tsung_test()->
     % Tsung call
-    Url = postgis:r_point({4,4}),
+    Pid = list_to_pid("<0.42.0>"),
+    Url = postgis:r_point({Pid, []}),
     ?assertEqual(true, is_list(Url)).
 
 r_box2d_test()->
@@ -36,7 +38,8 @@ r_box2d_test()->
 
 r_box2d_tsung_test()->
     % Tsung call
-    Url = postgis:r_box2d({4,4}),
+    Pid = list_to_pid("<0.42.0>"),
+    Url = postgis:r_box2d({Pid,[]}),
     ?assertEqual(true, is_list(Url)).
 
 setsrid_test()->

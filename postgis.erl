@@ -17,8 +17,8 @@
 %% PostgGIS functions
 %%
 -module(postgis).
--export([rnd_point/0, rnd_point/1]).
--export([rnd_box2d/0, rnd_box2d/1]).
+-export([rnd_point/0, r_point/1, r_point_srid/1]).
+-export([rnd_box2d/0, r_box2d/1]).
 -export([ewkb/1]).
 -export([ewkb_point/1]).
 -export([ewkb_point/2]).
@@ -28,19 +28,29 @@
 
 %% Tsung exports
 
-rnd_point({_Pid,_DynVars})-> rnd_point().
-rnd_box2d({_Pid,_DynVars})-> rnd_box2d().
+r_point({_Pid,_DynVars})-> rnd_point().
+r_point_srid({_Pid,_DynVars})-> rnd_point_srid().
+r_box2d({_Pid,_DynVars})-> rnd_box2d().
 ewkb_point({_Pid,_DynVars})-> ewkb_point().
 
 %% Functions
 
 rnd_box2d()->
-    {Lat,Lon} = randomcoord:rcoord(),
-    lists:flatten(io_lib:format("ST_SetSRID(ST_MakeBox2d(ST_Point(~.6f, ~.6f)), ~p)",[Lon, Lat, ?SRID])).
+    {FLat,FLon} = randomcoord:rcoord(),
+    {SLat,SLon} = {randomcoord:rcoord(FLat, 90), randomcoord:rcoord(FLon, 180)},
+    setsrid(lists:flatten(io_lib:format("ST_MakeBox2d(ST_Point(~.6f, ~.6f), ST_Point(~.6f, ~.6f))",
+                                        [FLon, FLat, SLon, SLat]))).
 
 rnd_point()->
     {Lat,Lon} = randomcoord:rcoord(),
-    lists:flatten(io_lib:format("ST_SetSRID(ST_Point(~.6f, ~.6f), ~p)",[Lon, Lat, ?SRID])).
+    lists:flatten(io_lib:format("ST_Point(~.6f, ~.6f)",[Lon, Lat])).
+
+rnd_point_srid()->
+    {Lat,Lon} = randomcoord:rcoord(),
+    setsrid(lists:flatten(io_lib:format("ST_Point(~.6f, ~.6f)",[Lon, Lat]))).
+
+setsrid(Desc)->
+    lists:flatten("ST_SetSRID("++ Desc ++"), "++io_lib:format("~p", [?SRID])++")").
 
 ewkb(Value)->    
     Int = round(Value*100),

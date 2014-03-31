@@ -7,7 +7,7 @@ tms.erl
 Tsung Exports
 =============
 
-Functions exported by the **tms** module callable by Tsung.
+The following functions are callable directly in Tsung's scenario.
 
 * move_first/1
 
@@ -35,6 +35,12 @@ Functions exported by the **tms** module callable by Tsung.
 
 * move_east_layers/1
 
+.. index:: move_east
+
+moving functions
+----------------
+
+Move once to the east
 
 Other exports
 =============
@@ -63,5 +69,5 @@ Define the map's width in pixel, integer value.
 map_height
 ----------
 
-Define the map's width in pixel, integer value.
+Define the map's height in pixel, integer value.
 
