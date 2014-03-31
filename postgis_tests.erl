@@ -21,21 +21,25 @@
 -include_lib("eunit/include/eunit.hrl").
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
-rnd_point_test()->
-    Url = postgis:rnd_point(),
+r_point_test()->
+    Url = postgis:r_point(),
     ?assertEqual(true, is_list(Url)).
 
-rnd_point_tsung_test()->
+r_point_tsung_test()->
     % Tsung call
-    Url = postgis:rnd_point({4,4}),
+    Url = postgis:r_point({4,4}),
     ?assertEqual(true, is_list(Url)).
 
-rnd_box2d_test()->
-    Url = postgis:rnd_box2d(),
+r_box2d_test()->
+    Url = postgis:r_box2d(),
     ?assertEqual(true, is_list(Url)).
 
-rnd_box2d_tsung_test()->
+r_box2d_tsung_test()->
     % Tsung call
-    Url = postgis:rnd_box2d({4,4}),
+    Url = postgis:r_box2d({4,4}),
     ?assertEqual(true, is_list(Url)).
 
+setsrid_test()->
+    Attend = "ST_SetSRID(Foo), 4326)",
+    Result = postgis:setsrid("Foo"),
+    ?assertEqual(Attend, Result).

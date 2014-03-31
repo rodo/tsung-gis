@@ -35,16 +35,16 @@ rcoord_values_test()->
     ?assertEqual(true, is_float(Lat)).
 
 rcoord_limit_test()->
-    Rcoord = randomcoord:rcoord(45,50),
-    ?assertEqual(true, Rcoord >= 45),
-    ?assertEqual(true, Rcoord =< 50).
+    Rcoord = randomcoord:rcoord(45.0 ,50.0),
+    ?assertEqual(true, Rcoord >= 45.0),
+    ?assertEqual(true, Rcoord =< 50.0).
 
 rcoord_bbox_lon_test()->
-    {Lat, Lon} = randomcoord:rcoord(45,50,60,70),
-    ?assertEqual(true, Lat >= 45),
-    ?assertEqual(true, Lat =< 50),
-    ?assertEqual(true, Lon >= 60),
-    ?assertEqual(true, Lon =< 70).
+    {Lat, Lon} = randomcoord:rcoord(45.0,50.0,60.0,70.0),
+    ?assertEqual(true, Lat >= 50.0),
+    ?assertEqual(true, Lat =< 70.0),
+    ?assertEqual(true, Lon >= 45.0),
+    ?assertEqual(true, Lon =< 60.0).
 
 longitude_test()->
     Lon = randomcoord:longitude(20.0,22.0),
