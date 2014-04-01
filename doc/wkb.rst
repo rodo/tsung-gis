@@ -4,8 +4,8 @@
 wkb.erl
 =======
 
-Erlang library to convert and generate datas in 
-`Well Known Binary <http://en.wikipedia.org/wiki/Well-known_text#Well-known_binary>`
+Erlang library to convert and generate datas in OGC
+`Well Known Binary <http://en.wikipedia.org/wiki/Well-known_text#Well-known_binary>`_
 format defined by the Open Geospatial Consortium (OGC) and
 described in their Simple Feature Access.
 
@@ -19,7 +19,7 @@ Functions exported and callable direcxtly in a Tsung's scenario
 wkb_point/1
 -----------
 
-Retrun a point witn random coordinate in WKB format.
+Return a point with random coordinate in WKB format.
 
 Paramaters : Tsung tuple {Pid, DynVars}
 
@@ -39,7 +39,7 @@ Other exports
 float_to_wkb/1
 --------------
 
-Convert a float in Well Known Binary format
+Convert a float to OGC Well Known Binary format
 
 Parameters : float
 

@@ -4,8 +4,8 @@
 postgis.erl
 ===========
 
-Build SQL commend to manipulate geometric objects in a `Postgis
-<http://postgis.net/>` database.
+Build SQL commend to manipulate geometric objects in a 
+`Postgis <http://postgis.net/>`_ database.
 
 The ``postgis`` module uses the ``randomcoord`` module to generate
 random datas.
@@ -26,7 +26,7 @@ functions which name that begins with **r_** return random data.
 r_point/1
 ---------
 
-The function `r_point/1` returns a SQL command to build an `ST_Point <http://postgis.net/docs/ST_Point.html>`.
+The function `r_point/1` returns a SQL command to build an `ST_Point <http://postgis.net/docs/ST_Point.html>`_.
 
 Paramaters : Tsung tuple {Pid, DynVars}
 
