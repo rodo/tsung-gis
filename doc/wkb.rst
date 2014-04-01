@@ -4,6 +4,11 @@
 wkb.erl
 =======
 
+Convert and generate datas in `Well Known Binary
+<http://en.wikipedia.org/wiki/Well-known_text#Well-known_binary>`
+format defined by the Open Geospatial Consortium (OGC) and
+described in their Simple Feature Access.
+
 Tsung Exports
 =============
 
@@ -13,6 +18,8 @@ Functions exported and callable by Tsung
 
 wkb_point/1
 -----------
+
+Retrun a point witn random coordinate in WKB format.
 
 Paramaters : Tsung tuple {Pid, DynVars}
 
