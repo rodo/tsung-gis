@@ -34,22 +34,42 @@ rcoord_values_test()->
     ?assertEqual(true, is_float(Lon)),
     ?assertEqual(true, is_float(Lat)).
 
+%% random coordinate between Min and Max value
+%%
 rcoord_limit_test()->
     Rcoord = randomcoord:rcoord(45.0 ,50.0),
     ?assertEqual(true, Rcoord >= 45.0),
-    ?assertEqual(true, Rcoord =< 50.0).
+    ?assertEqual(true, Rcoord =< 50.0),
+    ?assertEqual(true, is_float(Rcoord)).
 
+%% random coordinate between Min and Max value
+%% with Min and Max inverted in call
+rcoord_limit_reverse_test()->
+    Rcoord = randomcoord:rcoord(65.0 ,15.0),
+    ?assertEqual(true, Rcoord >= 15.0),
+    ?assertEqual(true, Rcoord =< 65.0),
+    ?assertEqual(true, is_float(Rcoord)).
+
+
+%% random coordinate in a bbox
+%%
 rcoord_bbox_lon_test()->
     {Lat, Lon} = randomcoord:rcoord(45.0,50.0,60.0,70.0),
     ?assertEqual(true, Lat >= 50.0),
     ?assertEqual(true, Lat =< 70.0),
     ?assertEqual(true, Lon >= 45.0),
-    ?assertEqual(true, Lon =< 60.0).
+    ?assertEqual(true, Lon =< 60.0),
+    ?assertEqual(true, is_float(Lon)),
+    ?assertEqual(true, is_float(Lat)).
 
+%% Random Longitude
+%%
 longitude_test()->
     Lon = randomcoord:longitude(20.0,22.0),
     ?assertEqual(true, is_float(Lon)).
 
+%% Random Latitude
+%%
 latitude_test()->
     Lat = randomcoord:latitude(40.0,42.0),
     ?assertEqual(true, is_float(Lat)).

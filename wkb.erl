@@ -14,63 +14,22 @@
 %%     You should have received a copy of the GNU General Public License
 %%     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%
-%% PostgGIS functions
-%%
--module(postgis).
--export([rnd_point/0, r_point/1, r_point_srid/1]).
--export([rnd_box2d/0, r_box2d/1, r_box2d_srid/1]).
+%% Well Known Binary conversion functions
+%% http://en.wikipedia.org/wiki/Well-known_text#Well-known_binary
+-module(wkb).
+%% Exports
 -export([float_to_wkb/1]).
 -export([wkb_point/1]).
 -export([wkb_point/2]).
+%% Tsung exports
+wkb_point({_Pid,_DynVars})-> wkb_point().
 
 -define(SRID, 4326).
 -define(INDIAN, "00").
 
-%% Tsung exports
 
-r_point({_Pid,_DynVars})-> rnd_point().
-r_point_srid({_Pid,_DynVars})-> rnd_point_srid().
-r_box2d({_Pid,_DynVars})-> rnd_box2d().
-r_box2d_srid({_Pid,_DynVars})-> rnd_box2d_srid().
-wkb_point({_Pid,_DynVars})-> wkb_point().
 
 %% Functions
-
-%%
-%% 2 dimensions box with random coordinate
-%%
-rnd_box2d()->
-    {FLat,FLon} = randomcoord:rcoord(),
-    {SLat,SLon} = {randomcoord:rcoord(FLat, 90), randomcoord:rcoord(FLon, 180)},
-    lists:flatten(io_lib:format("ST_MakeBox2d(ST_Point(~.6f, ~.6f), ST_Point(~.6f, ~.6f))",
-                                        [FLon, FLat, SLon, SLat])).
-%%
-%% 2 dimensions box with random coordinate
-%%
-rnd_box2d_srid()->
-    {FLat,FLon} = randomcoord:rcoord(),
-    {SLat,SLon} = {randomcoord:rcoord(FLat, 90), randomcoord:rcoord(FLon, 180)},
-    setsrid(lists:flatten(io_lib:format("ST_MakeBox2d(ST_Point(~.6f, ~.6f), ST_Point(~.6f, ~.6f))",
-                                        [FLon, FLat, SLon, SLat]))).
-%%
-%% Point with random coordinate
-%%
-rnd_point()->
-    {Lat,Lon} = randomcoord:rcoord(),
-    lists:flatten(io_lib:format("ST_Point(~.6f, ~.6f)",[Lon, Lat])).
-
-%%
-%% Point with random coordinate, with SRID defined
-%%
-rnd_point_srid()->
-    {Lat,Lon} = randomcoord:rcoord(),
-    setsrid(lists:flatten(io_lib:format("ST_Point(~.6f, ~.6f)",[Lon, Lat]))).
-
-%%
-%% Return an object with SRID defined
-%%
-setsrid(Desc)->
-    lists:flatten("ST_SetSRID("++ Desc ++", "++io_lib:format("~p", [?SRID])++")").
 
 %% Convert a float to binary/64
 %%

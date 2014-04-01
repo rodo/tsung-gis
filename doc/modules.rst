@@ -12,3 +12,4 @@ Modules
    reproj
    slippymap
    tms
+   wkb

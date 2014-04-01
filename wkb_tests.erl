@@ -17,32 +17,24 @@
 %%
 %% Unit tests for module : postgis
 
--module(postgis_tests).
+-module(wkb_tests).
 -include_lib("eunit/include/eunit.hrl").
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
-rnd_point_test()->
-    %%
-    Url = postgis:rnd_point(),
-    ?assertEqual(true, is_list(Url)).
+% Point in Well Known Binary format
+wkb_point_test()->   
+    Result = wkb:wkb_point(2.0, 4.0),
+    Attend = "000000000140100000000000004000000000000000",    
+    ?assertEqual(Attend, Result).
 
-r_point_tsung_test()->
-    % Tsung call
-    Pid = list_to_pid("<0.42.0>"),
-    Url = postgis:r_point({Pid, []}),
-    ?assertEqual(true, is_list(Url)).
+% Convert binary to list in hex format
+bin_to_hex_list_test()->
+    Result = wkb:bin_to_hex_list(<<2.0:64/float>>),
+    Attend = "4000000000000000",
+    ?assertEqual(Attend, Result).
 
-rnd_box2d_test()->
-    Url = postgis:rnd_box2d(),
-    ?assertEqual(true, is_list(Url)).
-
-r_box2d_tsung_test()->
-    % Tsung call
-    Pid = list_to_pid("<0.42.0>"),
-    Url = postgis:r_box2d({Pid,[]}),
-    ?assertEqual(true, is_list(Url)).
-
-setsrid_test()->
-    Attend = "ST_SetSRID(Foo, 4326)",
-    Result = postgis:setsrid("Foo"),
+% Convert to Well Known Text value
+float_to_wkb_test()->
+    Result = wkb:float_to_wkb(4.0),
+    Attend = "4010000000000000",
     ?assertEqual(Attend, Result).
