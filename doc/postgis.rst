@@ -18,9 +18,8 @@ functions which name that begins with **r_** return random data.
 
 * r_box2d/1, r_box2d_srid/1
 
-* r_point/1, r_point_srid/1
+* r_point/1, `r_point_srid/1`_
 
-.. _rpoint_one:
 .. index:: r_point/1
 
 r_point/1
@@ -42,7 +41,7 @@ Return : string
 r_point_srid/1
 --------------
 
-The function `r_point_srid/1` works like :ref:`r_point/1 <rpoint_one>` but
+The function `r_point_srid/1` works `r_point/1`_ but
 enclose the result in ``SetSRID()`` postgis function.
 
 Paramaters : Tsung tuple {Pid, DynVars}
@@ -54,13 +53,11 @@ Return : string
    12> postgis:r_point_srid({Pid, DynVars}).
    "ST_SetSRID(ST_Point(69.896366, 63.997280), 4326)"
 
-.. _rbox2d_one:
-
 r_box2d/1
 ---------
 
 The function `r_box2d/1` returns a SQL command to build a 2
-dimension box with the `ST_MakeBox2D <http://postgis.net/docs/ST_MakeBox2D.html>`.
+dimension box with the `ST_MakeBox2D <http://postgis.net/docs/ST_MakeBox2D.html>`_.
 
 Paramaters : Tsung tuple {Pid, DynVars}
 
@@ -79,7 +76,7 @@ Return : string
 r_box2d_srid/1
 --------------
 
-The function `r_box2d_srid/1` works like :ref:`r_box2d/1 <rbox2d_one>` but
+The function `r_box2d_srid/1` works like `r_box2d/1`_ but
 enclose the result in ``SetSRID()`` postgis function.
 
 Paramaters : Tsung tuple {Pid, DynVars}

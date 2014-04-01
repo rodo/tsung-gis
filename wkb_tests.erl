@@ -27,6 +27,12 @@ wkb_point_test()->
     Attend = "000000000140100000000000004000000000000000",
     ?assertEqual(Attend, Result).
 
+% Middle of the earth in some geometric systems
+wkb_point_null_test()->
+    Result = wkb:wkb_point(0.0, 0.0),
+    Attend = "000000000100000000000000000000000000000000",
+    ?assertEqual(Attend, Result).
+
 % Convert binary to list in hex format
 bin_to_hex_list_test()->
     Result = wkb:bin_to_hex_list(<<2.0:64/float>>),
@@ -73,4 +79,9 @@ wkb_geoms_empty_test()->
 wkb_geoms_test()->
     Result = wkb:geoms(linestring, [{42.563, -1.2}, {66.3652, 11.2}], {0, ""}),
     Attend = {2, "BFF333333333333340454810624DD2F240266666666666664050975F6FD21FF3"},    
+    ?assertEqual(Attend, Result).
+
+wkb_geoms_null_test()->
+    Result = wkb:geoms(linestring, [{0,0}, {0,0}], {0, ""}),
+    Attend = {2, "0000000000000000000000000000000000000000000000000000000000000000"},    
     ?assertEqual(Attend, Result).

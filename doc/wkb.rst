@@ -9,6 +9,8 @@ Erlang library to convert and generate datas in OGC
 format defined by the Open Geospatial Consortium (OGC) and
 described in their Simple Feature Access.
 
+Encodings are done in big indian.
+
 Tsung Exports
 =============
 
