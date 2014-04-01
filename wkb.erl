@@ -21,7 +21,7 @@
 -export([float_to_wkb/1]).
 -export([wkb_point/1]).
 -export([wkb_point/2]).
--export([wkb_linestring/4]).
+-export([wkb_linestring/1]).
 -export([geoms/3]).
 -export([geoms/2]).
 %% Tsung exports
@@ -43,31 +43,27 @@ wkb_point()->
     wkb_geometry(point, {Lat, Lon}).
 
 wkb_point(Lat, Lon)->
-    wkb_geometry(point, [{Lat, Lon}]).
+    wkb_geometry(point, {Lat, Lon}).
 
-wkb_linestring(Lat, Lon, BLat, BLon)->
-    wkb_geometry(linestring, [{Lat, Lon}, {BLat, BLon}]).
+wkb_linestring(Coords)->
+    wkb_geometry(linestring, Coords).
 
 wkb_geometry(linestring, Coords)->
     ?INDIAN++geoms(linestring, Coords);
 wkb_geometry(point, Coords)->
-    [{Lat, Lon}] = Coords,
-    BLat = float_to_wkb(Lat),
-    BLon = float_to_wkb(Lon),
-    Prefix = wkb_prefix(point),
-    ?INDIAN++Prefix++BLon++BLat.
+    {P, C} = geom(point, Coords),
+    ?INDIAN++P++C.
 
 
 geoms(Geom, Coords)->
-    {Pref, Coord} = geoms(Geom, Coords, {"", ""}),
-    Pref++Coord.
+    {Count, Coord} = geoms(Geom, Coords, {0, ""}),
+    wkb_prefix(Geom)++string:right(lists:flatten(io_lib:format("~p", [Count])), 8, $0)++Coord.
 
-geoms(Geom, [], {Prefixs, Coords})->
-    Geom, [], {Prefixs, Coords};
-geoms(Geom, [H|T], {Prefixs, Coords})->
-    {P, C} = geom(Geom, H),
-    geoms(Geom, T, {Prefixs ++ P, Coords ++ C}).
-
+geoms(_, [], {Count, Coords})->    
+    {Count, Coords};
+geoms(Geom, [H|T], {Count, Coords})->
+    {_P, C} = geom(Geom, H),
+    geoms(Geom, T, {Count + 1, Coords ++ C}).
 
 geom(Geom, {Lat, Lon})->
     {wkb_prefix(Geom), float_to_wkb(Lon)++float_to_wkb(Lat)}.
@@ -87,25 +83,3 @@ wkb_prefix(Geometry)->
 	multilinestring-> "00000005";
 	multipolygon   -> "00000006"
     end.
-
-
-%%
-
-%% 0102 00000000 000000000016400000000000404540  0000000000000000002F4000000000004045C0
-
-
-%% 0102 00000002000000000000000000164000000000004045400000000000002F4000000000004045C0
-
-%% 00000000024000000000000000401000000000000040160000000000004045400000000000
-
-%% 000000000140000000000000004010000000000000000000000140160000000000004045400000000000
-
-%% 0000000002.4000000000000000.4010000000000000.4016000000000000.4045400000000000
-
-
-
-%%         0101000000
-%%         0101000000 00000000000016400000000000404540
-%%                                          0101000000 0000000000002F4000000000004045C0
-%% 010200000002000000 00000000000016400000000000404540 0000000000002F4000000000004045C0
-%% 00000000024000000000000000401000000000000040160000000000004045400000000000

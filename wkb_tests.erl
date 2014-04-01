@@ -40,14 +40,14 @@ float_to_wkb_test()->
     ?assertEqual(Attend, Result).
 
 % Point in Well Known Binary format
-wkb_linstring_test()->
-    Result = wkb:wkb_linestring(2.0, 4.0, 42.5, -1.25),
+wkb_linestring_test()->
+    Result = wkb:wkb_linestring([{2.0, 4.0}, {42.5, -1.25}]),
     Attend = "00000000020000000240100000000000004000000000000000BFF40000000000004045400000000000",
     ?assertEqual(Attend, Result).
 
 % Point
 wkb_geometry_point_test()->
-    Result = wkb:wkb_geometry(point, [{72.321654, -54.654654654}]),
+    Result = wkb:wkb_geometry(point, {72.321654, -54.654654654}),
     Attend = "0000000001C04B53CBB9448D5640521495FAA8A82A",
     ?assertEqual(Attend, Result).
 
@@ -55,4 +55,22 @@ wkb_geometry_point_test()->
 wkb_geometry_linestring_test()->
     Result = wkb:wkb_geometry(linestring, [{2.0, 4.0}, {42.5, -1.25}]),
     Attend = "00000000020000000240100000000000004000000000000000BFF40000000000004045400000000000",
+    ?assertEqual(Attend, Result).
+
+% 
+wkb_geom_test()->
+    Result = wkb:geom(point, {2.0, 4.0}),
+    Attend = {"00000001","40100000000000004000000000000000"},
+    ?assertEqual(Attend, Result).
+
+
+% 
+wkb_geoms_empty_test()->
+    Result = wkb:geoms(linestring, [], {0, "Foo"}),
+    Attend = {0, "Foo"},    
+    ?assertEqual(Attend, Result).
+
+wkb_geoms_test()->
+    Result = wkb:geoms(linestring, [{42.563, -1.2}, {66.3652, 11.2}], {0, ""}),
+    Attend = {2, "BFF333333333333340454810624DD2F240266666666666664050975F6FD21FF3"},    
     ?assertEqual(Attend, Result).

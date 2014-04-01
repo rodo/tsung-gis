@@ -4,17 +4,17 @@
 wkb.erl
 =======
 
-Convert and generate datas in `Well Known Binary
-<http://en.wikipedia.org/wiki/Well-known_text#Well-known_binary>`
+Erlang library to convert and generate datas in 
+`Well Known Binary <http://en.wikipedia.org/wiki/Well-known_text#Well-known_binary>`
 format defined by the Open Geospatial Consortium (OGC) and
 described in their Simple Feature Access.
 
 Tsung Exports
 =============
 
-Functions exported and callable by Tsung
+Functions exported and callable direcxtly in a Tsung's scenario
 
-* wkb_point/1
+.. index:: wkb_point/1
 
 wkb_point/1
 -----------
@@ -34,8 +34,40 @@ Return : string
 Other exports
 =============
 
-* float_to_wkb/1
+.. index:: float_to_wkb/1
 
-* wkb_point/1
+float_to_wkb/1
+--------------
 
-* wkb_point/2
+Convert a float in Well Known Binary format
+
+Parameters : float
+
+Return : string
+
+.. code-block:: erlang
+
+   79> wkb:float_to_wkb(42.14). 
+   "404511EB851EB852"
+
+
+.. index:: wkb_point/2
+
+wkb_point/2
+-----------
+
+.. index:: wkb_linestring/1
+
+wkb_linestring/1
+----------------
+
+Return a linestring encoded in WKB format.
+
+Paramaters : Atrray of tuples {lat, lon}
+
+Return : string
+
+.. code-block:: erlang
+
+   84> wkb:wkb_linestring([{42.5, -5.5},{135.2,5}]).         
+   "000000000200000002C016000000000000404540000000000040140000000000004060E66666666666"
