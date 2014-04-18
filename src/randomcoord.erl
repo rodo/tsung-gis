@@ -46,29 +46,43 @@ rcoord("germany")->
 rcoord(_) ->
     rcoord().
 
+%% Description : random coordinate
+%% Returns : float
 rcoord() ->
     rcoord(-180,-90.0,180.0,90.0).
 
+%% Description : random coordinate in a bbox defined by 4 coordinate
+%% Parameters : 
+%% - Left : float
+%% - Bottom : float
+%% - Right : float
+%% - Top : float
+%%
+%% Returns : {float, float}
 rcoord(Left,Bottom,Right,Top)->
     Lon=longitude(float(Left),float(Right)),
     Lat=latitude(float(Bottom),float(Top)),
     {Lat,Lon}.
 
 rcoord(Min,Max) when Min == Max ->
-    Max;
+    float(Max);
 rcoord(Min,Max) when Min > Max ->
     rcoord(Max, Min);
 rcoord(Min,Max) ->
     {N1,N2,N3} = now(),
     random:seed(N1,N2,N3),
     Val=random:uniform() + Min + random:uniform(round(Max - Min)),
-    max(Min,min(Val,Max)).
-
-
+    float(max(Min,min(Val,Max))).
+%%
+%% Longitude
+%% Returns : float
 longitude(Left,Right)->
     X = rcoord(Left,Right),
     min(180.0,X).
-
+%%
+%% Latitude
+%% Returns : float
+%%
 latitude(Min,Max)->
     X = rcoord(Min,Max),
     min(90.0,X).
