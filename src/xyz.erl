@@ -24,7 +24,7 @@
 %%  - map_width (in pixel)
 %%  - tms_layers (optionnal)
 %% @end
--module(tms).
+-module(xyz).
 -export([urlzxy/1]).
 -export([get_urlblock/1]).
 -export([get_urlfrom/2]).
