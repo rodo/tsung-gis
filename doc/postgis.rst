@@ -17,7 +17,8 @@ functions which name that begins with **r_** return random data.
 
 * r_point/1, r_point_srid/1
 
-.. _rpoint_one:
+
+
 
 r_point/1
 ---------
@@ -37,7 +38,7 @@ Return : string
 r_point_srid/1
 --------------
 
-The :index:`r_point_srid/1` functions works like :ref:`r_point/1 <rpoint_one>` but
+The :index:`r_point_srid/1` functions works like :ref:`r_point/1 <r_point/1>` but
 enclose the ``ST_Point()`` result in ``SetSRID()`` postgis function.
 
 Paramaters : classical tuple of tsung datas {Pid, DynVars}
