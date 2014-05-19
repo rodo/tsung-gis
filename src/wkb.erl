@@ -24,11 +24,16 @@
 -export([wkb_linestring/1]).
 -export([geoms/3]).
 -export([geoms/2]).
+%
+-ifdef(TEST).
+-export([geom/2,wkb_geometry/2,bin_to_hex_list/1]).
+-endif.
 %% Tsung exports
 wkb_point({_Pid,_DynVars})-> wkb_point().
 
 -define(SRID, 4326).
 -define(INDIAN, "00").
+
 
 %% Functions
 

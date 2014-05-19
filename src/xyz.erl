@@ -31,6 +31,7 @@
 -export([move_first/1,move_first_layers/1,move_next/1]).
 -export([move_north/1, move_south/1, move_west/1, move_east/1]).
 -export([move_north_layers/1,move_south_layers/1,move_west_layers/1,move_east_layers/1]).
+-export([pixel2tiles/2]).
 
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
@@ -58,13 +59,19 @@ urlzxy({_Pid, _DynVars})->
 read_ssize(DynVars, height)->
     case ts_dynvars:lookup(map_height,DynVars) of
         {ok,Size} -> trunc(binary_to_number(Size) / ?TILE_HEIGHT) + 1;
-        false -> trunc(?MAP_HEIGHT / ?TILE_HEIGHT) + 1
+        false -> pixel2tiles(?MAP_HEIGHT, ?TILE_HEIGHT)
     end;
 read_ssize(DynVars, width)->
     case ts_dynvars:lookup(map_width,DynVars) of
         {ok,Size} -> trunc(binary_to_number(Size) / ?TILE_WIDTH) + 1;
-        false -> trunc(?MAP_WIDTH/?TILE_WIDTH) + 1
+        false -> pixel2tiles(?MAP_WIDTH, ?TILE_WIDTH)
     end.
+
+%% Number of tiles
+pixel2tiles(_, 0)->
+    1;
+pixel2tiles(MapWidth, TileSize)->
+    trunc(MapWidth / TileSize) + 1.
 
 %% @doc The first move
 %%

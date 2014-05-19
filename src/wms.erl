@@ -22,6 +22,10 @@
 -export([defaults/0]).
 -export([move_first/1]).
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
+%
+-ifdef(TEST).
+-export([tupletolist/1,buildurl/2,options/2,default_option/1]).
+-endif.
 
 %%
 %% Define here your defaults values

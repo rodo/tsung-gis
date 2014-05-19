@@ -11,6 +11,11 @@
 -module(map).
 -export([move_first/1]).
 
+%
+-ifdef(TEST).
+-export([laysplit/1]).
+-endif.
+
 % @doc Convert list_url DynVar to list of coord
 %
 %

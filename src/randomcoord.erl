@@ -19,7 +19,9 @@
 -module(randomcoord).
 -export([url/1,rcoord_array/1]).
 -export([rcoord/0,rcoord/1,rcoord/2,rcoord/4]).
-
+-ifdef(TEST).
+-export([longitude/2,latitude/2]).
+-endif.
 
 url({_Pid,_DynVars})->
     {Lat,Lon} = rcoord(),
