@@ -1,0 +1,10 @@
+<!-- Move to the west -->
+<setdynvars sourcetype="erlang" callback="tms:move_west">
+  <var name="list_url" />
+</setdynvars>
+
+<foreach name="element" in="list_url">
+  <request subst="true">
+    <http url="/%%_element%%.png" method="GET" version="1.1"/>
+  </request>
+</foreach>

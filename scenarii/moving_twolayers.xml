@@ -1,5 +1,12 @@
 <?xml version="1.0"?>
-<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd"
+[
+<!ENTITY tmswest SYSTEM "/tms_west.xml">
+<!ENTITY tmseast SYSTEM "/tms_east.xml">
+<!ENTITY tmssouth SYSTEM "/tms_south.xml">
+<!ENTITY tmsnorth SYSTEM "/tms_north.xml">
+]
+>
 <!--
 
 Author :  Rodolphe Quiedeville
@@ -38,7 +45,7 @@ This scenario implements predicitive moves
 
   <options>
     <option type="ts_http" name="user_agent">
-      <user_agent probability="100">tsung 1.5.0</user_agent>
+      <user_agent probability="100">tsung 1.5.1</user_agent>
     </option>
   </options>
 
@@ -49,7 +56,7 @@ This scenario implements predicitive moves
           in this case with a default tile's size of 256x256
           the map is a square 3x2 -->
      <setdynvars sourcetype="value" value="roads,rivers,sea">
-       <var name="map_layers" />
+       <var name="tms_layers" />
      </setdynvars>
      <setdynvars sourcetype="value" value="700">
        <var name="map_width" />
@@ -79,56 +86,22 @@ This scenario implements predicitive moves
        </foreach>
      </transaction>
 
-     <!-- Move to the west -->
-     <setdynvars sourcetype="erlang" callback="tms:move_west">
-       <var name="list_url" />
-     </setdynvars>
-
+     <!-- Move west -->
      <transaction name="move_west">
-       <foreach name="element" in="list_url">
-	 <request subst="true">
-	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
-	 </request>
-       </foreach>
+       &tmswest;
      </transaction>
 
-     <!-- Move to the north -->
-     <setdynvars sourcetype="erlang" callback="tms:move_north_layers">
-       <var name="list_url" />
-     </setdynvars>
-
-     <transaction name="move_north">
-       <foreach name="element" in="list_url">
-	 <request subst="true">
-	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
-	 </request>
-       </foreach>
+     <!-- Move  south -->
+     <transaction name="move_south">
+       &tmssouth;
      </transaction>
-
-     <!-- Move to the east -->
-     <setdynvars sourcetype="erlang" callback="tms:move_east_layers">
-       <var name="list_url" />
-     </setdynvars>
 
      <transaction name="move_east">
-       <foreach name="element" in="list_url">
-	 <request subst="true">
-	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
-	 </request>
-       </foreach>
+       &tmseast;
      </transaction>
 
-     <!-- Move to the south -->
-     <setdynvars sourcetype="erlang" callback="tms:move_south_layers">
-       <var name="list_url" />
-     </setdynvars>
-
-     <transaction name="move_south">
-       <foreach name="element" in="list_url">
-	 <request subst="true">
-	   <http url="/%%_element%%.png" method="GET" version="1.1"/>
-	 </request>
-       </foreach>
+     <transaction name="move_north">
+       &tmsnorth;
      </transaction>
 
    </session>
