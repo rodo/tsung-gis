@@ -31,7 +31,10 @@
 -export([move_first/1,move_first_layers/1,move_next/1]).
 -export([move_north/1, move_south/1, move_west/1, move_east/1]).
 -export([move_north_layers/1,move_south_layers/1,move_west_layers/1,move_east_layers/1]).
+
+-ifdef(TEST).
 -export([pixel2tiles/2]).
+-endif.
 
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
 
