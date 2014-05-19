@@ -13,3 +13,4 @@ Modules
    slippymap
    tms
    wkb
+   xyz

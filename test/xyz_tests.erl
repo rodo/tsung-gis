@@ -22,7 +22,25 @@
 %% Units tests
 
 pixel2tiles_test()->
-    ?assertEqual(4, xyz:pixel2tiles(800, 256)).
+    ?assertEqual(5, xyz:pixel2tiles(800, 256)).
 
 pixel2tiles_null_test()->
     ?assertEqual(1, xyz:pixel2tiles(800, 0)).
+
+readssize_height_test() ->
+    Res = xyz:read_ssize(ts_dynvars:new([map_height], [<<"640">>]), height),
+    ?assertEqual(4, Res).
+
+readssize_width_test() ->
+    Res = xyz:read_ssize(ts_dynvars:new([map_width], [<<"960">>]), width),
+    ?assertEqual(5, Res).
+
+% The height is not set
+readssize_height_empty_test() ->
+    Res = xyz:read_ssize(ts_dynvars:new([foo],[2]), height),
+    ?assertEqual(4, Res).
+
+% The width is not set
+readssize_width_empty_test() ->
+    Res = xyz:read_ssize(ts_dynvars:new([foo],[2]), width),
+    ?assertEqual(5, Res).

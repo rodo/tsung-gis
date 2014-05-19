@@ -22,18 +22,18 @@
 %%  - list_url
 %%  - map_height (in pixel)
 %%  - map_width (in pixel)
-%%  - tms_layers (optionnal)
+%%  - xyz_layers (optionnal)
 %% @end
 -module(xyz).
 -export([urlzxy/1]).
 -export([get_urlblock/1]).
 -export([get_urlfrom/2]).
--export([move_first/1,move_first_layers/1,move_next/1]).
+-export([move_first/1,move_first_layers/1,action_random/1]).
 -export([move_north/1, move_south/1, move_west/1, move_east/1]).
 -export([move_north_layers/1,move_south_layers/1,move_west_layers/1,move_east_layers/1]).
 
 -ifdef(TEST).
--export([pixel2tiles/2]).
+-export([pixel2tiles/2,read_ssize/2]).
 -endif.
 
 -author({author, "Rodolphe Quiédeville", "<rodolphe@quiedeville.org>"}).
@@ -61,12 +61,12 @@ urlzxy({_Pid, _DynVars})->
 %% The sizes are defined in dynvars or return default value
 read_ssize(DynVars, height)->
     case ts_dynvars:lookup(map_height,DynVars) of
-        {ok,Size} -> trunc(binary_to_number(Size) / ?TILE_HEIGHT) + 1;
+        {ok,Size} -> pixel2tiles(binary_to_number(Size), ?TILE_HEIGHT);
         false -> pixel2tiles(?MAP_HEIGHT, ?TILE_HEIGHT)
     end;
 read_ssize(DynVars, width)->
     case ts_dynvars:lookup(map_width,DynVars) of
-        {ok,Size} -> trunc(binary_to_number(Size) / ?TILE_WIDTH) + 1;
+        {ok,Size} -> pixel2tiles(binary_to_number(Size),  ?TILE_WIDTH);
         false -> pixel2tiles(?MAP_WIDTH, ?TILE_WIDTH)
     end.
 
@@ -74,7 +74,7 @@ read_ssize(DynVars, width)->
 pixel2tiles(_, 0)->
     1;
 pixel2tiles(MapWidth, TileSize)->
-    trunc(MapWidth / TileSize) + 1.
+    trunc(MapWidth / TileSize) + 2.
 
 %% @doc The first move
 %%
@@ -94,7 +94,7 @@ move_first({_Pid, DynVars})->
 %%
 %%
 %%
-move_next({_Pid, DynVars})->
+action_random({_Pid, DynVars})->
     Sq=get_square_size(DynVars),
     TopLeft = url_corner(last_block(DynVars), top_left),
     case random_action(random:uniform(100)) of
@@ -105,7 +105,7 @@ move_next({_Pid, DynVars})->
 %% Return urls of all layers to the north
 %%
 layers(DynVars)->
-    case ts_dynvars:lookup(tms_layers, DynVars) of
+    case ts_dynvars:lookup(xyz_layers, DynVars) of
         {ok, Layers} -> string:tokens(Layers, ",");
         false -> ""
     end.
