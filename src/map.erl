@@ -28,12 +28,16 @@ move_first({_Pid, DynVars})->
                 case lists:member("wms", Layers) of
                     true -> wms:move_first({_Pid, DynVars});
                     _ -> []
-                end).
+                end,
+		case lists:member("xyz", Layers) of
+		    true -> xyz:move_first({_Pid, DynVars});
+		    _ -> []
+		end).
 
 map_types(DynVars)->
     laysplit(case ts_dynvars:lookup(map_systems, DynVars) of
                  {ok, Proj} -> Proj;
-                 false -> "tms"
+                 false -> "xyz"
              end).
 
 laysplit(Url)->

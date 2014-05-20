@@ -20,12 +20,8 @@ functions which name that begins with **r_** return random data.
 
 * r_point/1, `r_point_srid/1`_
 
-<<<<<<< HEAD
-
-
-=======
 .. index:: r_point/1
->>>>>>> f04b7c9cd849f5151cdd4e7808bd21ba9372a959
+
 
 r_point/1
 ---------
@@ -46,13 +42,9 @@ Return : string
 r_point_srid/1
 --------------
 
-<<<<<<< HEAD
+
 The :index:`r_point_srid/1` functions works like :ref:`r_point/1 <r_point/1>` but
 enclose the ``ST_Point()`` result in ``SetSRID()`` postgis function.
-=======
-The function `r_point_srid/1` works `r_point/1`_ but
-enclose the result in ``SetSRID()`` postgis function.
->>>>>>> f04b7c9cd849f5151cdd4e7808bd21ba9372a959
 
 Paramaters : Tsung tuple {Pid, DynVars}
 

@@ -7,7 +7,7 @@ xyz.erl
 Tsung Exports
 =============
 
-The following functions are directly callable in Tsung's scenario.
+The following functions are directly callable in Tsung's scenarios.
 
 * action_random/1
 
@@ -42,8 +42,8 @@ The following functions are directly callable in Tsung's scenario.
 Other exports
 =============
 
-The following functions are exported but are not callable directly on
-a Tsung scenario.
+The following functions are exported but are not callable directly in
+Tsung's scenarios.
 
 * get_urlfrom/2
 
