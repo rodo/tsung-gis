@@ -17,18 +17,27 @@
 %% Return a tuple Lat,Lon in range
 %%
 -module(store).
--export([url/1,ret/1]).
+-export([url/1,ret/1,hello/1]).
 
 url({_Pid,DynVars})->
     "lat=" ++ foo(DynVars).
 
 foo(DynVars)->
     case ts_dynvars:lookup(country, DynVars) of
-        {ok, Value}-> ts_modules_cache:store(country, Value);
+        {ok, Value}-> 
+            case ts_modules_cache:store(country, Value) of
+                {ok, ValuRes}-> ValuRes;
+                _ -> "error"
+            end;
         false -> ""
     end.
 
 
 ret({_Pid,_DynVars})->
-    {ok, Vald}=ts_modules_cache:retrieve(country),
-    Vald.
+    case ts_modules_cache:retrieve(country) of
+        {ok, Vald} -> Vald;
+        false -> "notfound"
+    end.
+
+hello({_Pid,_DynVars})->
+    "barfoo".

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="debug" version="1.0" dumptraffic="protocol">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true"/>
+  </clients>
+  
+  <!-- Server side setup -->
+<servers>
+  <server host="localhost" port="80" type="tcp"></server>
+</servers>
+  
+  <load>
+   <arrivalphase phase="1" duration="30" unit="second">
+     <users interarrival="2" unit="second" maxnumber="2"></users>
+   </arrivalphase>
+  </load>
+
+
+ <sessions>
+  <session name="http-example" probability="100" type="ts_http">
+
+     <setdynvars sourcetype="erlang" callback="store:hello">
+       <var name="country" />
+     </setdynvars>
+
+    <request subst="true">
+      <http url="/hello_%%_country%%" method="GET" version="1.1"/>
+    </request>
+
+
+    <setdynvars sourcetype="erlang" callback="store:url">
+      <var name="url" />
+    </setdynvars>
+
+    <request subst="true">
+      <http url="/url_%%_url%%" method="GET" version="1.1"/>
+    </request>
+
+    <setdynvars sourcetype="erlang" callback="store:ret">
+      <var name="url" />
+    </setdynvars>
+
+    <request subst="true">
+      <http url="/ret_%%_url%%" method="GET" version="1.1"/>
+    </request>
+
+
+  </session>
+ </sessions>
+</tsung>
