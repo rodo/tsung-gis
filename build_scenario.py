@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+"""
+Generate all the xml files for each actions, the module are
+defined in the src directory
+
+Example :
+
+build_directory.py -m map
+"""
+
 import os
 import sys
 from optparse import OptionParser
@@ -7,6 +16,7 @@ from optparse import OptionParser
 __version__ = "0.0.2"
 
 def arg_parse():
+
     """ Parse command line arguments """
     arg_list = "-m module [-o OUTPUT_DIRFILE]"
     usage = "Usage: %prog " + arg_list
