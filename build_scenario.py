@@ -4,7 +4,7 @@ import os
 import sys
 from optparse import OptionParser
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 def arg_parse():
     """ Parse command line arguments """
@@ -79,9 +79,9 @@ def mainfile(options, ents):
 def write_file(fpath, datas):
     """Write a file with datas
     """
-    f = open(fpath, 'w')
-    f.write(datas)
-    f.close()
+    with open(fpath, 'w') as f:
+        f.write(datas)
+        f.close()
 
 def xmlheader():
     """xml header use to generate the main file
