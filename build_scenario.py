@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import sys
 from optparse import OptionParser
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 def arg_parse():
     """ Parse command line arguments """
@@ -70,18 +70,18 @@ def mainfile(options, ents):
     fpath = os.path.join(options.outputdir, "tsung.xml")
 
     if not os.path.exists(fpath) or options.force:
-        print "write {}".format(fpath)
+        print ("write {}".format(fpath))
         write_file(fpath,
                    xmlheader().format('\n'.join(ents)))
     else:
-        print "{} exists, add -f to overwrite it".format(fpath)
+        print ("{} exists, add -f to overwrite it".format(fpath))
 
 def write_file(fpath, datas):
     """Write a file with datas
     """
-    f = open(fpath, 'w')
-    f.write(datas)
-    f.close()
+    with open(fpath, 'w') as f:
+        f.write(datas)
+        f.close()
 
 def xmlheader():
     """xml header use to generate the main file
@@ -121,18 +121,18 @@ def render(options, module, action, subaction, skeleton):
     """
     name = '{}_{}_{}.xml'.format(module, action, subaction)
     fpath = os.path.join(options.outputdir, name)
-    print "write {}".format(fpath)
+    print ("write {}".format(fpath))
     write_file(fpath, skeleton.format(module, name))
 
 if __name__ == '__main__':
     opts = arg_parse()
 
     if not os.path.isdir(opts.outputdir):
-        print '{} directory does not exists'.format(opts.outputdir)
+        print ('{} directory does not exists'.format(opts.outputdir))
         sys.exit(1)
 
     if opts.module is not None:
         main(opts)
     else:
-        print "please add at least one module with -m"
+        print("please add at least one module with -m")
         sys.exit(1)
